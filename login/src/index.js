@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const collection = require("./config");
+const session = require('express-session');
+
 
 const app = express();
 //convert data into json format
@@ -14,13 +16,20 @@ app.use(express.urlencoded({extended: false}));
 app.set('view engine', 'ejs');
 
 app.use(express.static("public"));
+// Session middleware setup
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Set secure to true if using HTTPS
+}));
 
 app.get("/", (req, res) =>{
     res.render("home");
 
 })
 app.get("/signup", (req, res) =>{
-    res.render("signup");
+    res.render("signup", { username: req.session.username }); // Pass username to app template
 })
 
 app.get("/login", (req, res) =>{
@@ -29,6 +38,10 @@ app.get("/login", (req, res) =>{
 
 app.get("/home", (req, res) =>{
     res.render("home");
+})
+
+app.get("/app", (req, res) =>{
+    res.render("app", { username: req.session.username }); // Pass username to app template
 })
 //End routes
 
@@ -52,6 +65,8 @@ app.post("/signup", async (req, res) =>{
     }
     //otherwise insert user data into database
     else{
+        // Set the user's name in the session
+        req.session.username = data.name;
         //hash the password using bcrypt
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(data.password, saltRounds);
@@ -63,7 +78,7 @@ app.post("/signup", async (req, res) =>{
         console.log(userdata);
 
         //send to app page
-        res.render("app");
+        return res.render("app", { username: data.name });
     }
 })
 
@@ -77,6 +92,9 @@ app.post("/login", async (req, res) => {
             return res.render("login", { error: "Username not found" });
         }
 
+         // Set the user's name in the session
+         req.session.username = check.name;
+
         // check hashed password in database with the plain text password
         const isPasswordMatched = await bcrypt.compare(req.body.password, check.password);
         if (!isPasswordMatched) {
@@ -84,8 +102,9 @@ app.post("/login", async (req, res) => {
             return res.render("login", { error: "Wrong Password" });
         }
 
-        // successful login, send to app page
-        return res.render("app");
+         // successful login, send to app page with the user's name
+         return res.render("app", { username: check.name });
+
     } catch (error) {
         console.log("Error in login:", error);
         // Generic error message for server-side errors
