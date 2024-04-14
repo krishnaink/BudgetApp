@@ -3,28 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width-device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-
     <link rel="stylesheet" href="/style.css">
+
 </head>
 
 <body>
-     <div class="form-container">
+    <div class="form-container">
         <h2>Signup</h2>
         <form action="/signup" method="post">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="on">
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" placeholder="password" required>
-        </div>
-        <button type="submit" class="submit-btn">Signup</button>
-     </form>
-     <p>Have an account? <a href="/login">Login</a></p>
-     </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="on">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Signup</button>
+        </form>
+        <p>Have an account? <a href="/login">Login</a></p>
+    </div>
+
+    <% if (typeof error !== 'undefined') { %>
+        <p id="error-message" class="error-message"><%= error %></p>
+    <% } %>
+
+    <script>
+        // Select the error message element
+        const errorMessage = document.getElementById('error-message');
+
+        // If error message element exists
+        if (errorMessage) {
+            // Fade out the error message after 3 seconds
+            setTimeout(() => {
+                errorMessage.style.opacity = 0;
+            }, 3000);
+        }
+    </script>
 </body>
 
 </html>

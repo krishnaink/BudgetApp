@@ -46,7 +46,9 @@ app.post("/signup", async (req, res) =>{
     //check if user already exists in the database
     const existingUser = await collection.findOne({name: data.name});
     if(existingUser){
-        res.send("Username already exists! Please choose another username.")
+        //Username already exists! Please choose another username.
+        return res.render("signup", { error: "Username already exists! \nPlease choose another username." });
+
     }
     //otherwise insert user data into database
     else{
@@ -65,31 +67,32 @@ app.post("/signup", async (req, res) =>{
     }
 })
 
-//for users logging in
+// for users logging in
 app.post("/login", async (req, res) => {
-    try{
-        //check username in database
-        const check = await collection.findOne({name: req.body.username});
-        if(!check){
-            return res.send("Username not found!");
+    try {
+        // check if the username exists in the database
+        const check = await collection.findOne({ name: req.body.username });
+        if (!check) {
+            // Username not found error
+            return res.render("login", { error: "Username not found" });
         }
 
-        //check hashed password in database with the plain text passsword
+        // check hashed password in database with the plain text password
         const isPasswordMatched = await bcrypt.compare(req.body.password, check.password);
-        if(!isPasswordMatched){
-           return res.send("Wrong password!");
+        if (!isPasswordMatched) {
+            // Wrong password error
+            return res.render("login", { error: "Wrong Password" });
         }
-        //successful login, send to app page
-        else{
-            return res.render("app");
-        }
-    }
 
-    catch{
-        console.log("Error in login");
+        // successful login, send to app page
+        return res.render("app");
+    } catch (error) {
+        console.log("Error in login:", error);
+        // Generic error message for server-side errors
+        return res.status(500).send("An error occurred during login. Please try again later.");
     }
-
 });
+
 
 
 

@@ -16,9 +16,10 @@ body {
     width: 300px;
     margin: 100px auto;
     background-color: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 200px;
 }
 
 /* Form header styles */
@@ -29,7 +30,7 @@ body {
 
 /* Form group styles */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 /* Label styles */
@@ -64,3 +65,17 @@ input[type="password"] {
 .submit-btn:hover {
     background-color: #0056b3;
 }
+
+.error-message {
+    color: red;
+    font-family: Arial, sans-serif;
+    font-size: 1.5vw; /* Use viewport width (vw) units for font size */
+    transition: opacity 0.5s ease-in-out; /* Add transition effect for opacity */
+    text-align: center;
+    position: absolute; /* Position the error message absolutely */
+    top: 20%; /* Adjust the top position as a percentage of the container height */
+    left: 50%; /* Center the error message horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+}
+
+
