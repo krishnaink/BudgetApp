@@ -1,83 +1,98 @@
 import { useState } from 'react';
-import { useExpensesContext } from "../hooks/useExpensesContext"
+import { useExpensesContext } from '../hooks/useExpensesContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const ExpenseForm = () => {
-    const { dispatch } = useExpensesContext()
-    const { user } = useAuthContext()
-    const [category, setCategory] = useState('')
-    const [amount, setAmount] = useState('')
-    const [description, setDescription] = useState('')
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields] = useState([])
+    const { dispatch } = useExpensesContext();
+    const { user } = useAuthContext();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    // State for dashboard inputs
+    const [dashboardCategory, setDashboardCategory] = useState('');
+    const [dashboardType, setDashboardType] = useState('');
 
-        if (!user){
-            setError('You must be loggin in')
+    // State for financial goal inputs
+    const [goalCategory, setGoalCategory] = useState('');
+    const [goalAmount, setGoalAmount] = useState('');
+
+    const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
+
+    const handleDashboardSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!user) {
+            setError('You must be logged in');
             return;
         }
 
-          const expense = {category, amount, description}
+        // Add logic for dashboard submission here
+    };
 
-          const response = await fetch('/api/expenses', {
-            method: 'POST',
-            body: JSON.stringify(expense),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
-            }
-          })
-          const json = await response.json()
+    const handleGoalSubmit = async (e) => {
+        e.preventDefault();
 
-          if (!response.ok){
-            setError(json.error)
-            setEmptyFields(json.emptyFields)
-          }
-          if (response.ok){
-            setCategory('')
-            setAmount('')
-            setDescription('')
-            setError(null)
-            setEmptyFields([])
-            console.log('new expense added', json)
-            dispatch({type: 'CREATE_EXPENSE', payload: json})
-          }
-    }
-    
+        if (!user) {
+            setError('You must be logged in');
+            return;
+        }
+
+        // Add logic for financial goal submission here
+    };
+
     return (
-        <form className="create" onSubmit={handleSubmit}>
-            <h3>Add a New Expense</h3>
+        <div>
+            <div className="dashboard-container">
+                <h3>Add a New Dashboard</h3>
+                <form className="create" onSubmit={handleDashboardSubmit}>
+                    <label>Dashboard Name</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setDashboardCategory(e.target.value)}
+                        value={dashboardCategory}
+                        className={emptyFields.includes('dashboardCategory') ? 'error' : ''}
+                    />
 
-            <label>Category</label>
-            <input
-                type="text"
-                onChange={(e) => setCategory(e.target.value)}
-                value={category}
-                className={emptyFields.includes('category') ? 'error' : ''}
-            />
+                    <label>Dashboard Type</label>
+                    <select
+                        value={dashboardType}
+                        onChange={(e) => setDashboardType(e.target.value)}
+                        className={emptyFields.includes('dashboardType') ? 'error' : ''}
+                    >
+                        <option value="">Select Dashboard Type</option>
+                        <option value="Personal Dashboard">Personal Dashboard</option>
+                        <option value="George Mason University Semester Cost Planner">George Mason University Semester Cost Planner</option>
+                    </select>
 
-            <label>$</label>
-            <input
-                type="number"
-                onChange={(e) => setAmount(e.target.value)}
-                value={amount}
-                className={emptyFields.includes('amount') ? 'error' : ''}
-            />
+                    <button>Add Dashboard</button>
+                </form>
+            </div>
 
-            <label>Description</label>
-            <input
-                type="text"
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
-                className={emptyFields.includes('description') ? 'error' : ''}
-            />
+            <div className="goal-container">
+                <h3>Add a New Financial Goal</h3>
+                <form className="create" onSubmit={handleGoalSubmit}>
+                    <label>Financial Goal Name</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setGoalCategory(e.target.value)}
+                        value={goalCategory}
+                        className={emptyFields.includes('goalCategory') ? 'error' : ''}
+                    />
 
-            <button>Add Expense</button>
+                    <label>Set Financial Goal Amount</label>
+                    <input
+                        type="number"
+                        onChange={(e) => setGoalAmount(e.target.value)}
+                        value={goalAmount}
+                        className={emptyFields.includes('goalAmount') ? 'error' : ''}
+                    />
+
+                    <button>Add Financial Goal</button>
+                </form>
+            </div>
+
             {error && <div className="error">{error}</div>}
-        </form>
-    )
-}
+        </div>
+    );
+};
 
 export default ExpenseForm;
