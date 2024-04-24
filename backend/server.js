@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const expenseRoutes = require('./routes/expenses')
 const userRoutes = require('./routes/user')
-const fiancialGoalRoutes = require('./routes/fiancialGoals')
+const incomeRoute = require('./routes/income')
 
 //express app
 const app = express()
@@ -18,9 +18,9 @@ app.use((req, res, next) => {
 })
 
 //respond to http requests with routing
-app.use('/api/fiancialGoals', fiancialGoalRoutes)
 app.use('/api/expenses', expenseRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/income', incomeRoute)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

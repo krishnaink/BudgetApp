@@ -12,8 +12,7 @@ body {
   font-family: "Poppins";
 }
 header {
-  background: #42ae24;
-  color:white;
+  background: #fff;
 }
 header .container {
   max-width: 1400px;
@@ -24,7 +23,7 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #ffffff;
+  color: #333;
   text-decoration: none;
 }
 .pages{
@@ -39,6 +38,8 @@ header a {
   grid-template-columns: 3fr 1fr;
   gap: 100px;
 }
+
+
 .expense-details {
   background: #fff;
   border-radius: 4px;
@@ -50,8 +51,9 @@ header a {
 .expense-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
-  color: var(--primary);
+  color: red
 }
+
 .expense-details p {
   margin: 0;
   font-size: 0.9em;
@@ -111,26 +113,15 @@ nav a {
   margin-left: 10px;
 }
 nav button {
-  background: #42ae24;
-  color: white;
-  border: 2px solid white;
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
   padding: 6px 10px;
   border-radius: 4px;
   font-family: "Poppins";
   cursor: pointer;
   font-size: 1em;
-  margin-left: 20px
-}
-
-.button {
-  background-color: #42ae24;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease;
+  margin-left: 10px
 }
 
 /* auth forms */
@@ -142,46 +133,36 @@ form.signup, form.login {
   border-radius: 4px;
 }
 
-/* Select dropdown menu */
-select {
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border: 1px solid #ddd;
+
+
+
+
+.income-details {
+  background: #fff;
   border-radius: 4px;
-  box-sizing: border-box;
-  appearance: none; /* Remove default arrow */
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Add custom arrow */
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-
-/* Style for dropdown options */
-select option {   
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-  margin-bottom: 5px; /* Add margin between options */
-}
-
-/* Style for selected option */
-select option:hover {
-  background-color: #0a64e2; /* Change color of selected option */
-  color: #fff;
-  margin-bottom: 5px; /* Add margin between options */
-
-}
-
-
-.welcome-page {
-  text-align: center;
-}
-
-.rectangle {
-  width: 200px;
-  height: 100px;
-  background-color: #000000; /* Change color as needed */
   margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.income-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: rgb(55, 234, 55)
 }
 
+.income-details p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.income-details span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
