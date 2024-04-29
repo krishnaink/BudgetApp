@@ -12,7 +12,6 @@ const IncomeForm = () => {
     const [emptyFields, setEmptyFields] = useState([]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
 
         if (!user || !user.token) {
             setError('You must be logged in');
@@ -40,7 +39,8 @@ const IncomeForm = () => {
         if (!response.ok) {
             setError(json.error || 'Failed to add income.');
             setEmptyFields(json.emptyFields || []);
-        } else {
+        } 
+        if(response.ok) {
             setCategory('');
             setAmount('');
             setDescription('');

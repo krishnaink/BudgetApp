@@ -80,6 +80,7 @@ const Home = () => {
                     {/* Close button */}
                     <button className="close_button" onClick={() => setShowFinancialStatus(false)}>X</button>
                     <FinancialStatusDetails /> {/* Correct placement of component */}
+
                 </div>
             )}
         </div>
