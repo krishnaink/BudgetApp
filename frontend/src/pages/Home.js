@@ -8,7 +8,7 @@ import IncomeDetails from '../components/IncomeDetails';
 import IncomeForm from '../components/IncomeForm';
 import { useIncomeContext } from '../hooks/useIncomeContext';
 import FinancialStatusDetails from '../components/FinancialStatusDetails';
-import IncomePieChart from '../components/IncomePieChart';
+import CompletePieChart from '../components/CompletePieChart';
 
 
 
@@ -60,7 +60,7 @@ const Home = () => {
                     <ExpenseDetails key={expense._id} expense={expense} />
                 ))}
             </div>
-            <ExpenseForm/>
+            <ExpenseForm />
 
             <div className="income">
                 {income && income.map((incomeItem) => (
@@ -68,7 +68,7 @@ const Home = () => {
                 ))}
             </div>
             <div className="income-form-container">
-                <IncomeForm/>
+                <IncomeForm />
             </div>
 
             {/* Financial Status Button */}
@@ -80,6 +80,9 @@ const Home = () => {
                     {/* Close button */}
                     <button className="close_button" onClick={() => setShowFinancialStatus(false)}>X</button>
                     <FinancialStatusDetails /> {/* Correct placement of component */}
+                    <div className="complete_pie_chart_container">
+                        <CompletePieChart />
+                    </div>
 
                 </div>
             )}

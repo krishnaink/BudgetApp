@@ -212,3 +212,10 @@ form.signup, form.login {
   height: 30px;
   cursor: pointer;
 }
+
+.complete_pie_chart_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 95px; /* Adjust as needed */
+}
+

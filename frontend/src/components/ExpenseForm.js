@@ -19,6 +19,17 @@ const ExpenseForm = () => {
             return;
         }
 
+        if (!category || !amount || !description) {
+            setError('Please fill in all fields.');
+            return;
+        }
+
+        // Validate amount to ensure it's not negative
+        if (parseFloat(amount) < 0) {
+            setError('Amount cannot be negative.');
+            return;
+        }
+
           const expense = {category, amount, description}
 
           const response = await fetch('/api/expenses', {

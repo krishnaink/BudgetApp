@@ -12,6 +12,7 @@ const IncomeForm = () => {
     const [emptyFields, setEmptyFields] = useState([]);
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
         if (!user || !user.token) {
             setError('You must be logged in');
@@ -20,6 +21,12 @@ const IncomeForm = () => {
 
         if (!category || !amount || !description) {
             setError('Please fill in all fields.');
+            return;
+        }
+
+        // Validate amount to ensure it's not negative
+        if (parseFloat(amount) < 0) {
+            setError('Amount cannot be negative.');
             return;
         }
 
@@ -39,8 +46,7 @@ const IncomeForm = () => {
         if (!response.ok) {
             setError(json.error || 'Failed to add income.');
             setEmptyFields(json.emptyFields || []);
-        } 
-        if(response.ok) {
+        } else {
             setCategory('');
             setAmount('');
             setDescription('');
