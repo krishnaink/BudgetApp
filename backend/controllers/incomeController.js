@@ -4,9 +4,9 @@ const mongoose = require('mongoose')
 //GET all sources of incomes
 const getAllIncome = async (req, res) => {
     const user_id = req.user._id
-    const currIncome = await Income.find({user_id}).sort({createdAt: -1})
-
-    res.status(200).json(currIncome)
+    const currIncome = await Income.find({ user_id });
+    const sortedIncome = currIncome.slice().sort((a, b) => b.createdAt - a.createdAt);
+    res.status(200).json(sortedIncome);
 }
 
 //GET a single source of income
@@ -50,7 +50,7 @@ const createIncome = async (req, res) => {
     try {
         const user_id = req.user._id
         const currentIncome = await Income.create({description, amount, category, user_id})
-        res.status(200).json(income)
+        res.status(200).json(currentIncome)
     } catch (error){
         res.status(400).json({error: error.message})
     }

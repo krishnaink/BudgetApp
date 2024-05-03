@@ -4,9 +4,9 @@ const mongoose = require('mongoose')
 //GET all expenses
 const getExpenses = async (req, res) => {
     const user_id = req.user._id
-    const expenses = await Expense.find({user_id}).sort({createdAt: -1})
-
-    res.status(200).json(expenses)
+    const expenses = await Expense.find({ user_id });
+    const sortedExpenses = expenses.slice().sort((a, b) => b.createdAt - a.createdAt);
+    res.status(200).json(sortedExpenses);
 }
 
 //GET a single expense
